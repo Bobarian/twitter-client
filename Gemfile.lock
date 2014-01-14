@@ -120,6 +120,11 @@ GEM
       json (~> 1.8)
       memoizable (~> 0.4.0)
       simple_oauth (~> 0.2.0)
+    twitter-bootstrap-rails (2.2.8)
+      actionpack (>= 3.1)
+      execjs
+      rails (>= 3.1)
+      railties (>= 3.1)
     tzinfo (0.3.38)
     uglifier (2.4.0)
       execjs (>= 0.3.0)
@@ -135,4 +140,5 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   sqlite3
   twitter (~> 5.5.1)
+  twitter-bootstrap-rails (~> 2.2.8)
   uglifier (>= 1.0.3)
