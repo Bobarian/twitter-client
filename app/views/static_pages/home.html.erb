@@ -1,14 +1,24 @@
 <h1>Standford Related Tweets</h1>
 
-<ul id="tweetList" class="group-item">
-	<li class="list-group-item">
-		<div class="Htitle"><h2 class="userName">Bob </h2><h4 class="UserLoc">Location</h4></div>
-		<p class="tweet">Blah Blah Blah!</p>
-		<h5 class="time">March 15th</h5>
-		<h3 class="faved">3 Favorites</h3>
-	</li>
-
-
-</ul>
-
-<div class="tweets"></div>
+<div class="myList">
+    <input class="search" placeholder="Search" />
+    <button class="sort" data-sort="userName">
+      Sort by name
+    </button>
+    <button class="sort" data-sort="time">
+      Sort by date
+    </button>
+	<ul id="tweetList" class="group-item list">
+		<li class="list-group-item">
+			<div class="Htitle">
+				<h2 class="userName"></h2>
+				<p class="UserLoc"></p>
+			</div>
+			<p class="tweet"></p>
+			<div class="footer">
+				<h5 class="time"></h5>
+				<h3 class="faved"></h3>
+			</div>
+		</li>
+	</ul>
+</div>

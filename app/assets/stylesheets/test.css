@@ -2,6 +2,7 @@ body {
 	font-family: "Verdana", "Arial", Sans-serif;
 }
 
+
 #tweetList {
 	list-style: none;
 }
@@ -10,17 +11,25 @@ body {
 		border: 1px solid black;
 		margin: 10px;
 		border-radius: 10px;
-		background-color: #E6E6E6;
+		background-color: #DAD7CB;
 }
 
 .Htitle {
 	border-radius: 10px 10px 0px 0px;
-	background-color: #87E5FF;
-	height: 40px;
+	color: #DAD7CB;
+	background-color: #8C1515;
+	height: 20px;
+}
+
+.footer {
+	background-color: #8C1515;
+	color: #DAD7CB;
+	border-radius: 0px 0px 10px 10px;
 }
 
 .userName {
 	display: inline-block;
+	font-size: 14px;
 	padding-right: 10px;
 	padding-left: 10px;
 	margin-top: 2px;
@@ -30,12 +39,15 @@ body {
 .UserLoc {
 	display: inline-block;
 	margin-top: 2px;
+	font-size: 14px;
+	font-style: italic;
 
 }
 
 .tweet {
-	padding-left: 10px;
-	margin-top: 10px;
+	padding-left: 8px;
+	margin-top: 8px;
+	font-size: 12px;
 }
 
 .time {
@@ -43,6 +55,8 @@ body {
 	padding-left: 10px;
 	margin-top: 0px;
 	margin-bottom: 0px;
+	font-size: 10px;
+	font-style: italic;
 }
 
 .faved {
@@ -50,4 +64,93 @@ body {
 	padding-left: 10px;
 	margin-top: 0px;
 	margin-bottom: 0px;
+	font-size: 10px
+}
+
+.list {
+  font-family:sans-serif;
+  margin:0;
+  padding:20px 0 0;
+}
+.list > li {
+  display:block;
+  background-color: #eee;
+  padding:10px;
+  box-shadow: inset 0 1px 0 #fff;
+}
+.avatar {
+  max-width: 150px;
+}
+img {
+  max-width: 100%;
+}
+h3 {
+  font-size: 16px;
+  margin:0 0 0.3rem;
+  font-weight: normal;
+  font-weight:bold;
+}
+p {
+  margin:0;
+}
+
+input {
+  border:solid 1px #ccc;
+  border-radius: 5px;
+  padding:7px 14px;
+  margin-bottom:10px
+}
+input:focus {
+  outline:none;
+  border-color:#aaa;
+}
+.sort {
+  padding:8px 30px;
+  border-radius: 6px;
+  border:none;
+  display:inline-block;
+  color:#fff;
+  text-decoration: none;
+  background-color: #28a8e0;
+  height:30px;
+}
+.sort:hover {
+  text-decoration: none;
+  background-color:#1b8aba;
+}
+.sort:focus {
+  outline:none;
+}
+.sort:after {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  content:"";
+  position: relative;
+  top:-10px;
+  right:-5px;
+}
+.sort.asc:after {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #fff;
+  content:"";
+  position: relative;
+  top:13px;
+  right:-5px;
+}
+.sort.desc:after {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #fff;
+  content:"";
+  position: relative;
+  top:-10px;
+  right:-5px;
 }
