@@ -3,6 +3,9 @@ dataGrab()
 function dataGrab() {
 	$.ajax({
 	  url: "/api/retrieveTweets/abcd",
+	  data: {
+	  	page: 3
+	  },
 	  type: "GET",
 	  success: function(tweetData) {
 	    insertData(tweetData);
