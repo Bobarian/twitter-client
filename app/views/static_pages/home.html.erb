@@ -1,6 +1,16 @@
-<h1>Standford Related Tweets</h1>
-
-<div class="myList">
+<h1>Top Standford Tweets</h1>
+    <div id="topTweeters">
+    	<h2 id="reTweetHeader">Postings with over 10 reTweets</h2>
+    	<ul>
+    	</ul>
+    </div>
+<h1>Top Locations of Tweets.</h1>
+	<div id="topLocations">
+		<ul>	
+		</ul>
+	</div>
+<h1>#Standford Tweet List</h1>
+<div id="myList">
     <input class="search" placeholder="Search" />
     <button class="sort" data-sort="userName">
       Sort by name
@@ -8,17 +18,13 @@
     <button class="sort" data-sort="time">
       Sort by date
     </button>
+    <button class="sort" data-sort="faved">
+      Sort by Favorite Count
+    </button>
+    <button class="sort" data-sort="reTweet">
+    	Sort by ReTweets
+    </button>
 	<ul id="tweetList" class="group-item list">
-		<li class="list-group-item">
-			<div class="Htitle">
-				<h2 class="userName"></h2>
-				<p class="UserLoc"></p>
-			</div>
-			<p class="tweet"></p>
-			<div class="footer">
-				<h5 class="time"></h5>
-				<h3 class="faved"></h3>
-			</div>
-		</li>
+
 	</ul>
 </div>

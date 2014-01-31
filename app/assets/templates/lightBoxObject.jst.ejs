@@ -1,0 +1,21 @@
+<div id="lightbox">
+	<div id="content">
+	<p>Click to close</p>
+		<li>
+			<div class='lTitle'>
+				<h2 class='lUserName'><%= status.user.screen_name %></h2>
+				<div class='lUserLoc'>From: <%= status.user.location %></div>
+			</div>
+			<div class='lTweet'><%= status.text %></div>
+			<div class='lFooter'>
+				<h5 class='lTime'>Status Date: <%=status.created_at %></h5>
+				<% if (status.favorite_count > 5) { %>
+					<h3 class='lFaved important'>
+				<% } else { %>
+					<h3 class='lFaved'> 
+				<% } %>
+					Favorite Count: <%= status.favorite_count %> </h3>
+			</div>
+		</li>
+	</div>
+</div>

@@ -1,0 +1,17 @@
+<li class='list-group-item' id="<%= counter %>">
+	<div class='title'>
+		<h2 class='userName'><%= status.user.screen_name %></h2>
+		<p class='UserLoc'>From: <%= status.user.location %></p>
+		<h2 class='reTweet'>Retweets: <%= status.retweet_count %> </h2>
+	</div>
+	<p class='tweet'><%= status.text %></p>
+	<div class='footer'>
+		<h5 class='time'>Status Date: <%=status.created_at %></h5>
+		<% if (status.favorite_count > 5) { %>
+			<h3 class='faved important'>
+		<% } else { %>
+			<h3 class='faved'> 
+		<% } %>
+			Favorite Count: <%= status.favorite_count %> </h3>
+	</div>
+</li>
