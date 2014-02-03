@@ -24,11 +24,16 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 end
-gem 'ejs'
+
+group :development do
+  gem 'pry'
+  gem 'pry-debugger'
+end
+
 gem 'jquery-rails'
 
 gem "twitter", "~> 5.5.1"
-
+gem 'ejs'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

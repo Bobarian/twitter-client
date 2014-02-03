@@ -1,10 +1,10 @@
 dataGrab()
-
+var pageNum = 1;
 function dataGrab() {
 	$.ajax({
 	  url: "/api/retrieveTweets/abcd",
 	  data: {
-	  	page: 3
+	  	page: pageNum
 	  },
 	  type: "GET",
 	  success: function(tweetData) {
@@ -121,12 +121,27 @@ $(document).on('click', '#lightbox', function() {
 })
 
 $(document).on('scroll', function() {
+	
 	if (window.scrollY + 1000 >= $(document).height()) {
+		pageNum++;
 		dataGrab();
 		
 	}
-		console.log("ScrollY:" + window.scrollY)
-		console.log("Document Height" + $(document).height())
 })
 
 
+
+
+function postTweet() {
+  $.ajax({
+    type: "post",
+    url:"/api/posttweet",
+    data: {
+      username: "first last",
+      message: "hello"
+    },
+    success: function(){
+      debugger;
+    }
+  })
+}

@@ -6,10 +6,32 @@ body {
 h1 {
   color: white;
   text-shadow: 0.1em 0.1em #333;
+  font-size: 20px;
 }
 
 h3 {
   font-size: 16px;
+}
+#postBox {
+  padding-top: 30px;
+}
+#mainBox {
+  padding-top: 30px;
+  width: 80%;
+  margin-left: 30px;
+}
+
+#navHead {
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  background: black;
+  color: white;
+}
+
+#navHead a {
+  color: white;
+  text-decoration: none;
 }
 
 #reTweetHeader {
@@ -89,6 +111,7 @@ h3 {
 	padding-left: 8px;
 	margin-top: 8px;
 	font-size: 12px;
+  overflow: auto;
 }
 
 .time {

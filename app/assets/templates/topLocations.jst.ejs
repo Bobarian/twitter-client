@@ -1,5 +1,6 @@
-
+<% if (location != "" && count > 1) { %>
 <li class="reTweetPost">
-	<h3 class="title"><%= count %> <%= location %></h3>
-	<p class="tweet"><%= status.text %></p>
+		<h3 class="title"><%= count %> <%= location %></h3>
+		<p class="tweet"><%= status.text %></p>
 </li>
+<% } %>
