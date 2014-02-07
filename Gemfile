@@ -30,7 +30,8 @@ group :development do
   gem 'pry-debugger'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', "~> 2.1.3"
+gem "rails-backbone"
 
 gem "twitter", "~> 5.5.1"
 gem 'ejs'

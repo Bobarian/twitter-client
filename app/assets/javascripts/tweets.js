@@ -1,4 +1,4 @@
-dataGrab()
+//dataGrab()
 var pageNum = 1;
 function dataGrab() {
 	$.ajax({
@@ -130,7 +130,7 @@ $(document).on('scroll', function() {
 })
 
 
-
+//Post Data
 
 function postTweet() {
   $.ajax({
@@ -141,7 +141,77 @@ function postTweet() {
       message: "hello"
     },
     success: function(){
-      debugger;
     }
   })
 }
+
+//Backbone Start
+
+
+
+var fullTweets = Backbone.Collection.extend({
+	url: "/api/retrieveTweets/abcd",
+	model: tweetModel,
+	parse: function(data){
+		debugger;
+		return data.statuses;
+	}
+});
+
+var tweetModel = Backbone.Model.extend({
+
+});
+
+var reTweetView = Backbone.View.extend({
+
+	el: "#topTweeters",
+
+	initialize: function() {
+		this.render();
+	},
+
+	render: function(){
+	
+		$(this.el).html("Hello World");
+	}
+
+});
+
+$(document).ready(function() {
+	var reTweet_view = new reTweetView();
+	window.myCollection = new fullTweets();
+	window.myCollection.fetch({
+		data: {
+	  		page: 1
+	  	}
+	});
+});
+
+
+
+var firstView = Backbone.View.extend({
+
+	tagName: "#mainBody",
+
+	initialize: function() {
+		this.render();
+	},
+
+	render: function(){
+		$(this.tagName).html("Hello World!");
+	}
+
+});
+
+$(document).ready(function(){
+	var MYmodel = new firstModel();
+	new firstView({model:MYmodel});
+})
+
+var firstModel = Backbone.Model.extend({
+	defaults: {
+		name: "Bob",
+		skill: "Javascript"
+	}
+})
+
