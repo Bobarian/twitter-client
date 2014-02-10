@@ -11,7 +11,7 @@ function dataGrab() {
 	    insertData(tweetData);
 	    insertLightBoxData(tweetData);
 	    //insertTopReTweeterData(tweetData);
-	    reTweeters(tweetData);
+	    //reTweeters(tweetData);
 	    locationTracker(tweetData);
   		}
 	})
@@ -26,7 +26,7 @@ function insertData(JSONdata) {
 	var userList = new List('myList', options);	 
 }
 
-
+/*
 function reTweeters(allTweets) {
 	var upperReTweets = allTweets.statuses;
 	
@@ -45,6 +45,7 @@ function reTweeters(allTweets) {
 		}
 	}
 }
+*/
 
 function locationTracker(allTweets) {
 	var locTrack = {};
@@ -147,44 +148,54 @@ function postTweet() {
 
 //Backbone Start
 
-
+var tweetModel = Backbone.Model.extend({});
 
 var fullTweets = Backbone.Collection.extend({
 	url: "/api/retrieveTweets/abcd",
 	model: tweetModel,
 	parse: function(data){
-		debugger;
 		return data.statuses;
 	}
+	//TweetCountSort: function(data).sort([])
 });
 
-var tweetModel = Backbone.Model.extend({
 
-});
 
 var reTweetView = Backbone.View.extend({
 
 	el: "#topTweeters",
 
 	initialize: function() {
-		this.render();
+		this.collection.on("reset", this.render, this);
+		//this.collection.on("all", function(blue){ debugger });
 	},
 
-	render: function(){
-	
-		$(this.el).html("Hello World");
+	render: function() {
+		var tweetol = this.collection.toJSON();
+		debugger;
+		/*upperReTweets.sort ( function (a, b) {
+			if (a.retweet_count > b.retweet_count)
+				return -1;
+			if (a.retweet_count < b.retweet_count)
+				return 1;
+			return 0;
+		});*/
+
+		for (var t = 0; t < tweetol.length; t++) {
+			if (tweetol[t].retweet_count > 10) {
+				$(this.el).append(JST.topTweeter({ status: tweetol[t]} ))
+			}
+		}
 	}
 
 });
 
 $(document).ready(function() {
-	var reTweet_view = new reTweetView();
+	
 	window.myCollection = new fullTweets();
-	window.myCollection.fetch({
-		data: {
-	  		page: 1
-	  	}
-	});
+	window.myCollection.fetch({ data: { page: 1 } });
+	var reTweet_view = new reTweetView({collection: myCollection});
+	//debugger;
 });
 
 
