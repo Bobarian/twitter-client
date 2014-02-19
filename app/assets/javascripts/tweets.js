@@ -1,4 +1,3 @@
-//dataGrab()
 var pageNum = 1;
 function dataGrab() {
 	$.ajax({
@@ -10,9 +9,7 @@ function dataGrab() {
 	  success: function(tweetData) {
 	    insertData(tweetData);
 	    insertLightBoxData(tweetData);
-	    //insertTopReTweeterData(tweetData);
-	    //reTweeters(tweetData);
-	    locationTracker(tweetData);
+
   		}
 	})
 }
@@ -26,81 +23,6 @@ function insertData(JSONdata) {
 	var userList = new List('myList', options);	 
 }
 
-/*
-function reTweeters(allTweets) {
-	var upperReTweets = allTweets.statuses;
-	
-	upperReTweets.sort(function (a, b) {
-		if (a.retweet_count > b.retweet_count)
-			return -1;
-		if (a.retweet_count < b.retweet_count)
-			return 1;
-		//a must be equal to b
-		return 0;
-	});
-
-	for (var t = 0; t < upperReTweets.length; t++) {
-		if (upperReTweets[t].retweet_count > 10) {
-			$("#topTweeters").append(JST.topTweeter({ status: upperReTweets[t] }))
-		}
-	}
-}
-*/
-
-function locationTracker(allTweets) {
-	var locTrack = {};
-	for (var t = 0; t < allTweets.statuses.length; t++) {
-			//debugger;
-			var locCheck = allTweets.statuses[t].user.location
-				if (locTrack.hasOwnProperty(locCheck) == true) {
-					locTrack[locCheck]++
-				}
-				else {
-					locTrack[allTweets.statuses[t].user.location] = 1
-				}
-	}
-
-	locOrder = []
-	for (key in locTrack) {
-		locOrder.push({location: key, count: locTrack[key]});
-	}
-
-	locOrder.sort(function (first, second) {
-		if (first.count > second.count) {
-			return -1;
-		}
-		else if (first.count < second.count) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
-
-	})
-	//debugger;
-
-
-	for (var l = 0; l < locOrder.length; l++) {
-		$("#topLocations").append(JST.topLocations({location: locOrder[l].location, count: locOrder[l].count}))
-	}
-	//debugger;
-}
-
-/*
-function insertTopReTweeterData(topReTweets) {
-	
-	for (var t = 0; t < topReTweets.statuses.length; t++) {
-		if (topReTweets.statuses[t].retweet_count > 10) {
-			$("#topTweeters").append(JST.topTweeter({ status: topReTweets.statuses[t] }))
-			//debugger;
-		}
-
-		else {
-			console.log("Skipped");
-		}
-	}
-} */
-
 //Used for Sorting
 var options = {
   valueNames: [ 'userName', 'time', 'tweet', 'faved', 'reTweet' ]
@@ -110,7 +32,6 @@ var options = {
 //Lightbox
 function insertLightBoxData(boxData) {
 	$(document).on('click', '.list-group-item', function() {
-		//debugger;
 		var x = $(this).attr("ID");
 		x = Number(x);
 		$('body').append(JST.lightBoxObject({ status: boxData.statuses[x] }));	
@@ -148,6 +69,48 @@ function postTweet() {
 
 //Backbone Start
 
+var commentModel = Backbone.Model.extend({
+
+	urlRoot: "/api/postweet",
+
+	url: function (){
+		url = this.urlRoot
+	}
+});
+
+var commentView = Backbone.View.extend({
+
+	el: "#postBox",
+
+	events: {
+		"click #sendTweet": "commentSave"
+
+	},
+
+	commentSave: function(evt) {
+
+		evt.preventDefault();
+
+		var userName = $("#userName").val();
+		var tweetPost = $("#tweetPost").val();
+
+		this.model.set({username: userName, comment: tweetPost});
+		debugger;
+		this.model.save();
+
+
+	}
+
+});
+
+
+
+
+
+
+
+
+
 var tweetModel = Backbone.Model.extend({});
 
 var fullTweets = Backbone.Collection.extend({
@@ -155,11 +118,46 @@ var fullTweets = Backbone.Collection.extend({
 	model: tweetModel,
 	parse: function(data){
 		return data.statuses;
+
+		},
+	comparator: function(dataForSorting){
+		return -dataForSorting.get("retweet_count")
+	},
+
+	locationTweetSort: function() {
+		
+		var locTweets = this.toJSON();
+		var locTrack = {};
+
+		for (var t = 0; t < locTweets.length; t++) {
+			var locCheck = locTweets[t].user.location
+			if ((locCheck in locTrack) == true) {
+				locTrack[locTweets[t].user.location]++
+			}
+			else {
+				locTrack[locTweets[t].user.location] = 1
+			}
+		};
+
+		locOrder = []
+		for (key in locTrack) {
+			locOrder.push({location: key, count: locTrack[key]});
+		};
+		
+		locOrder.sort(function (first, second) {
+			if (first.count > second.count) {
+				return -1;
+			}
+			else if (first.count < second.count) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		});
+		return locOrder;
 	}
-	//TweetCountSort: function(data).sort([])
 });
-
-
 
 var reTweetView = Backbone.View.extend({
 
@@ -167,19 +165,11 @@ var reTweetView = Backbone.View.extend({
 
 	initialize: function() {
 		this.collection.on("reset", this.render, this);
-		//this.collection.on("all", function(blue){ debugger });
 	},
 
 	render: function() {
+
 		var tweetol = this.collection.toJSON();
-		debugger;
-		/*upperReTweets.sort ( function (a, b) {
-			if (a.retweet_count > b.retweet_count)
-				return -1;
-			if (a.retweet_count < b.retweet_count)
-				return 1;
-			return 0;
-		});*/
 
 		for (var t = 0; t < tweetol.length; t++) {
 			if (tweetol[t].retweet_count > 10) {
@@ -190,12 +180,38 @@ var reTweetView = Backbone.View.extend({
 
 });
 
+var locationTweets = Backbone.View.extend({
+
+	el: "#topLocations",
+
+	initialize: function() {
+		this.collection.on("reset", this.render, this);
+	},
+
+	render: function() {
+
+		var locSorter = this.collection.sort(function(piecesofTweet) {
+			return piecesofTweet.get("user").location
+		});
+
+		var locOrder = this.collection.locationTweetSort();
+
+		for (var l = 0; l < locOrder.length; l++) {
+			$("#topLocations").append(JST.topLocations({location: locOrder[l].location, count: locOrder[l].count}))
+		}
+
+	}
+})
+
+
 $(document).ready(function() {
 	
 	window.myCollection = new fullTweets();
 	window.myCollection.fetch({ data: { page: 1 } });
-	var reTweet_view = new reTweetView({collection: myCollection});
-	//debugger;
+	commentBlahBlah = new tweetModel();
+	var reTweet_View = new reTweetView({collection: myCollection});
+	var locationTweets_View = new locationTweets({collection: myCollection});
+	var commentTweet = new commentView({model: commentBlahBlah});
 });
 
 
