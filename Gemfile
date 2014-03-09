@@ -10,7 +10,7 @@ gem 'sqlite3'
 # Bootstrap
 gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-gem "twitter-bootstrap-rails", "~> 2.2.8"
+gem 'bootstrap-sass'
 
 
 # Gems used only for assets and not required
@@ -28,11 +28,12 @@ end
 group :development do
   gem 'pry'
   gem 'pry-debugger'
+  gem 'debugger'
 end
 
 gem 'jquery-rails', "~> 2.1.3"
 gem "rails-backbone"
-
+gem 'devise'
 gem "twitter", "~> 5.5.1"
 gem 'ejs'
 # To use ActiveModel has_secure_password
@@ -48,4 +49,4 @@ gem 'ejs'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+

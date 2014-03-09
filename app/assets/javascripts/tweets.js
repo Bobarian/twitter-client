@@ -68,6 +68,41 @@ function postTweet() {
 }
 
 //Backbone Start
+/*
+BD.Models.UserRegistration = Backbone.Model.extend({
+	url: '/users.json',
+	paramRoot: 'user',
+
+	defaults: {
+		"email": "",
+		"password": "",
+		"password_confirmation": ""
+	}
+});
+
+BD.Models.UserSession = Backbone.Model.extend({
+	url: '/users/sign-in.json',
+	paramRoot: 'user',
+
+	defaults: {
+		"email": "",
+		"password": ""
+	}
+});
+
+BD.Models.UserPasswordRecovery = Backbone.Model.extend({
+	url: '/users/password.json',
+	paramRoot: 'user',
+
+	defaults: {
+		"email": ""
+	}
+});
+
+BD.Views.Unauthenticated = BD.Views.Unauthenticated || {};
+
+BD.Views.Unauthenticated.Login = Back
+*/
 
 var commentModel = Backbone.Model.extend({
 
@@ -102,13 +137,6 @@ var commentView = Backbone.View.extend({
 	}
 
 });
-
-
-
-
-
-
-
 
 
 var tweetModel = Backbone.Model.extend({});

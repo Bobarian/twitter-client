@@ -1,0 +1,21 @@
+
+
+@import 'bootstrap';
+
+.nav {
+	display: inline-block;
+	padding-top: 2px;
+}
+
+.navBox {
+  position: fixed;
+	background: #ecf0f1;
+	width: 100%;
+	z-index: 1;
+	border: 1px solid black;
+}
+
+#user_nav {
+	display: inline-block;
+  float: 	 right;
+}

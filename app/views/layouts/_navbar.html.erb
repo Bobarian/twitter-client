@@ -1,0 +1,18 @@
+<div class="navBox">
+	<ul class="nav nav-pills">
+	  <li class="active"><a href="#">Home</a></li>
+	  <li><a href="#section1">Top Tweeters</a></li>
+	  <li><a href="#section2">Top Locations</a></li>
+	  <li><a href="#section3">Tweet List</a></li>
+	</ul>
+	<div id="user_nav">
+		<% if user_signed_in? %>
+			Logged in as <strong><%= current_user.email %></strong>.
+			<%= link_to 'Edit profile', edit_user_registration_path %> |
+			<%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+		<% else %>
+			<%= link_to "Sign up", new_user_registration_path %> |
+			<%= link_to "Login", new_user_session_path %>
+		<% end %>
+	</div>
+</div>

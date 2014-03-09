@@ -1,5 +1,5 @@
 class ApiController < ApplicationController
-
+before_filter :authenticate_user!
 require 'twitter'
 
   def retrieveTweets

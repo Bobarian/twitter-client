@@ -10,5 +10,6 @@
  *
  *= require_self
  *= require reset
+ *= require bootstrap_and_customs
  *= require twitterpage
  */

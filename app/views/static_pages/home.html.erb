@@ -1,4 +1,4 @@
-<div id="navHead"><a href="#One">Top Tweeters</a> | <a href="#Two">Top Locations</a> | <a href="#Three">Tweet List</a></div>
+
 <div id="postBox">
 	<form>
 		<input type="text" id="userName"><br>
@@ -8,31 +8,35 @@
 </div>
 
 <div id="mainBox">
-	<h1 id="One">Top Standford Tweets</h1>
+	<span class="anchor" id="section1"></span>
+	<h1>Top Standford Tweets</h1>
 	    <div id="topTweeters">
 	    	<h2 id="reTweetHeader">Postings with over 10 reTweets</h2>
 	    	<ul>
 	    	</ul>
 	    </div>
-	<h1 id="Two">Top Locations of Tweets.</h1>
+	<span class="anchor" id="section2"></span>
+	<h1>Top Locations of Tweets.</h1>
 		<div id="topLocations">
 			<ul>	
 			</ul>
 		</div>
-	<h1 id="Three">#Standford Tweet List</h1>
+	<span class="anchor" id="section3"></span>
+	<h1>#Standford Tweet List</h1>
 	<div id="myList">
 	    <input class="search" placeholder="Search" />
+	    	<span class="bodyText">Sort By:</span>
 	    <button class="sort" data-sort="userName">
-	      Sort by name
+	      Name
 	    </button>
 	    <button class="sort" data-sort="time">
-	      Sort by date
+	      Date
 	    </button>
 	    <button class="sort" data-sort="faved">
-	      Sort by Favorite Count
+	      Favorite Count
 	    </button>
 	    <button class="sort" data-sort="reTweet">
-	    	Sort by ReTweets
+	    	ReTweets
 	    </button>
 		<ul id="tweetList" class="group-item list">
 
