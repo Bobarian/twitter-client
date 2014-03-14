@@ -13,12 +13,13 @@ function dataGrab() {
   		}
 	})
 }
+debugger;
 
 function insertData(JSONdata) {
-	
-	for (var i = 0; i < JSONdata.statuses.length; i++) {
+	debugger;
+	for (var i = 0; i < JSONdata.length; i++) {
 		
-		$("#tweetList").append(JST.tweetObject({ counter: i, status: JSONdata.statuses[i] }));
+		$("#tweetList").append(JST.tweetObject({ counter: i, status: JSONdata[i] }));
 	};
 	var userList = new List('myList', options);	 
 }
@@ -34,7 +35,7 @@ function insertLightBoxData(boxData) {
 	$(document).on('click', '.list-group-item', function() {
 		var x = $(this).attr("ID");
 		x = Number(x);
-		$('body').append(JST.lightBoxObject({ status: boxData.statuses[x] }));	
+		$('body').append(JST.lightBoxObject({ status: boxData[x] }));	
    	})
 }
 
@@ -42,14 +43,14 @@ $(document).on('click', '#lightbox', function() {
 		$('#lightbox').remove();
 })
 
-$(document).on('scroll', function() {
+// $(document).on('scroll', function() {
 	
-	if (window.scrollY + 1000 >= $(document).height()) {
-		pageNum++;
-		dataGrab();
+// 	if (window.scrollY + 1000 >= $(document).height()) {
+// 		pageNum++;
+// 		dataGrab();
 		
-	}
-})
+// 	}
+// })
 
 
 //Post Data
@@ -144,10 +145,7 @@ var tweetModel = Backbone.Model.extend({});
 var fullTweets = Backbone.Collection.extend({
 	url: "/api/retrieveTweets/abcd",
 	model: tweetModel,
-	parse: function(data){
-		return data.statuses;
-
-		},
+	
 	comparator: function(dataForSorting){
 		return -dataForSorting.get("retweet_count")
 	},
@@ -233,7 +231,7 @@ var locationTweets = Backbone.View.extend({
 
 
 $(document).ready(function() {
-	
+	dataGrab();
 	window.myCollection = new fullTweets();
 	window.myCollection.fetch({ data: { page: 1 } });
 	commentBlahBlah = new tweetModel();
@@ -244,29 +242,5 @@ $(document).ready(function() {
 
 
 
-var firstView = Backbone.View.extend({
 
-	tagName: "#mainBody",
-
-	initialize: function() {
-		this.render();
-	},
-
-	render: function(){
-		$(this.tagName).html("Hello World!");
-	}
-
-});
-
-$(document).ready(function(){
-	var MYmodel = new firstModel();
-	new firstView({model:MYmodel});
-})
-
-var firstModel = Backbone.Model.extend({
-	defaults: {
-		name: "Bob",
-		skill: "Javascript"
-	}
-})
 
