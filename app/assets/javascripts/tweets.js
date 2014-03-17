@@ -1,4 +1,5 @@
 var pageNum = 1;
+var lastIDpulled = 0;
 function dataGrab() {
 	$.ajax({
 	  url: "/api/retrieveTweets/abcd",
@@ -233,7 +234,7 @@ var locationTweets = Backbone.View.extend({
 $(document).ready(function() {
 	dataGrab();
 	window.myCollection = new fullTweets();
-	window.myCollection.fetch({ data: { page: 1 } });
+	window.myCollection.fetch({ data: { page: pageNum, maxid: lastIDpulled } });
 	commentBlahBlah = new tweetModel();
 	var reTweet_View = new reTweetView({collection: myCollection});
 	var locationTweets_View = new locationTweets({collection: myCollection});

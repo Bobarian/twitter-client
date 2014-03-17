@@ -24,6 +24,18 @@ require 'twitter'
     # render :json => tweets, :status => 200
   end
 
+#   def nextTweetBatch
+
+#     tweets = client.search('#Stanford', :max_id => params["max_id"]).take(40)
+#       config.consumer_key        = "XAnUHRqnPfS77sLQBXPtSw"
+#       config.consumer_secret     = "tGQfxPe5bWhbUSSq18hZxi26kbtUyjwtQ0ZGjZwGLA"
+#       config.access_token        = "12264892-h1ZokJ8AoDqtjnxRSCJLeVnDYfjrLBXXQTu20hc2Q"
+#       config.access_token_secret = "ZiHL1TmZPNMHXNgIYad7VVcOwfgc5Fp3Ar2M3zOm6hGpz"
+#     end
+
+#     render :json => tweets, :status => 200
+# end
+
   def postTweet
     if params.has_key?(:message) && params.has_key?(:username)
       message = { :message => "Your response has been successfully posted."}
