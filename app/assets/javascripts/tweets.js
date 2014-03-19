@@ -1,10 +1,10 @@
 var pageNum = 1;
 var lastIDpulled = 0;
-function dataGrab() {
+function dataGrab(useID) {
 	$.ajax({
 	  url: "/api/retrieveTweets/abcd",
 	  data: {
-	  	page: pageNum
+	  	max_id: useID
 	  },
 	  type: "GET",
 	  success: function(tweetData) {
@@ -14,18 +14,20 @@ function dataGrab() {
   		}
 	})
 }
-debugger;
-
+var maxyID = 0;
 function insertData(JSONdata) {
-	debugger;
 	for (var i = 0; i < JSONdata.length; i++) {
 		
 		$("#tweetList").append(JST.tweetObject({ counter: i, status: JSONdata[i] }));
+
+		if (i == JSONdata.length - 1) {
+			maxyID = JSONdata[i].id;
+		}
 	};
 	var userList = new List('myList', options);	 
 }
 
-//Used for Sorting
+//Used for Sorting for List.JS
 var options = {
   valueNames: [ 'userName', 'time', 'tweet', 'faved', 'reTweet' ]
 }
@@ -44,14 +46,13 @@ $(document).on('click', '#lightbox', function() {
 		$('#lightbox').remove();
 })
 
-// $(document).on('scroll', function() {
+$(document).on('scroll', function() {
 	
-// 	if (window.scrollY + 1000 >= $(document).height()) {
-// 		pageNum++;
-// 		dataGrab();
-		
-// 	}
-// })
+	if (window.scrollY + 1000 >= $(document).height()) {
+		dataGrab(maxyID);
+		//instead of this call a function that is in a view.
+	}
+})
 
 
 //Post Data
@@ -132,7 +133,6 @@ var commentView = Backbone.View.extend({
 		var tweetPost = $("#tweetPost").val();
 
 		this.model.set({username: userName, comment: tweetPost});
-		debugger;
 		this.model.save();
 
 
@@ -232,9 +232,10 @@ var locationTweets = Backbone.View.extend({
 
 
 $(document).ready(function() {
-	dataGrab();
+	// dataGrab(maxyID);
 	window.myCollection = new fullTweets();
-	window.myCollection.fetch({ data: { page: pageNum, maxid: lastIDpulled } });
+	debugger;
+	window.myCollection.fetch({ data: {maxid: lastIDpulled } });
 	commentBlahBlah = new tweetModel();
 	var reTweet_View = new reTweetView({collection: myCollection});
 	var locationTweets_View = new locationTweets({collection: myCollection});
@@ -242,6 +243,9 @@ $(document).ready(function() {
 });
 
 
+//Create a tweet container view.  El should be the same el I'm using now (where tweets go). Create another one tweet view.  Then pass the collection
+//into there.  this.render (line 215).
 
+//Interview question: Make a Todo List in Backbone.
 
 

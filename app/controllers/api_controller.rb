@@ -16,8 +16,11 @@ require 'twitter'
       config.access_token_secret = "ZiHL1TmZPNMHXNgIYad7VVcOwfgc5Fp3Ar2M3zOm6hGpz"
     end
 
-    stanfordTweets = client.search("stanford", :result_type => "recent").take(10)
-
+    if params[:max_id] == 0
+      stanfordTweets = client.search("stanford", :result_type => "recent").take(10)
+    else  
+      stanfordTweets = client.search("stanford", :result_type => "recent", :max_id => params[:max_id]).take(10)
+    end
     # tweets = client.search('#Stanford', :max_id => params["max_id"]).take(40)
 
     render :json => stanfordTweets, :status => 200
