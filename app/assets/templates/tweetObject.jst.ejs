@@ -6,8 +6,8 @@
 	</div>
 	<p class='tweet'><%= status.text %></p>
 	<div class='footer'>
-		<h5 class='time'>Status Date: <%=status.created_at %></h5>
-		<% if (status.favorite_count > 5) { %>
+		<h5 class='time'>Status Date: <%= status.created_at %></h5>
+		<% if ( status.favorite_count > 5) { %>
 			<h3 class='faved important'>
 		<% } else { %>
 			<h3 class='faved'> 

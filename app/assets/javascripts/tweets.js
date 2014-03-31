@@ -1,59 +1,11 @@
-var pageNum = 1;
 var lastIDpulled = 0;
-function dataGrab(useID) {
-	$.ajax({
-	  url: "/api/retrieveTweets/abcd",
-	  data: {
-	  	max_id: useID
-	  },
-	  type: "GET",
-	  success: function(tweetData) {
-	    insertData(tweetData);
-	    insertLightBoxData(tweetData);
-
-  		}
-	})
-}
 var maxyID = 0;
-function insertData(JSONdata) {
-	for (var i = 0; i < JSONdata.length; i++) {
-		
-		$("#tweetList").append(JST.tweetObject({ counter: i, status: JSONdata[i] }));
-
-		if (i == JSONdata.length - 1) {
-			maxyID = JSONdata[i].id;
-		}
-	};
-	var userList = new List('myList', options);	 
-}
+var c = 0;
 
 //Used for Sorting for List.JS
 var options = {
   valueNames: [ 'userName', 'time', 'tweet', 'faved', 'reTweet' ]
 }
-
-
-//Lightbox
-function insertLightBoxData(boxData) {
-	$(document).on('click', '.list-group-item', function() {
-		var x = $(this).attr("ID");
-		x = Number(x);
-		$('body').append(JST.lightBoxObject({ status: boxData[x] }));	
-   	})
-}
-
-$(document).on('click', '#lightbox', function() {
-		$('#lightbox').remove();
-})
-
-$(document).on('scroll', function() {
-	
-	if (window.scrollY + 1000 >= $(document).height()) {
-		dataGrab(maxyID);
-		//instead of this call a function that is in a view.
-	}
-})
-
 
 //Post Data
 
@@ -71,74 +23,54 @@ function postTweet() {
 }
 
 //Backbone Start
-/*
-BD.Models.UserRegistration = Backbone.Model.extend({
-	url: '/users.json',
-	paramRoot: 'user',
 
-	defaults: {
-		"email": "",
-		"password": "",
-		"password_confirmation": ""
-	}
-});
+// var commentModel = Backbone.Model.extend({
 
-BD.Models.UserSession = Backbone.Model.extend({
-	url: '/users/sign-in.json',
-	paramRoot: 'user',
+// 	urlRoot: "/api/postweet",
 
-	defaults: {
-		"email": "",
-		"password": ""
-	}
-});
+// 	url: function (){
+// 		url = this.urlRoot
+// 	}
+// });
 
-BD.Models.UserPasswordRecovery = Backbone.Model.extend({
-	url: '/users/password.json',
-	paramRoot: 'user',
+// var commentView = Backbone.View.extend({
 
-	defaults: {
-		"email": ""
-	}
-});
+// 	el: "#postBox",
 
-BD.Views.Unauthenticated = BD.Views.Unauthenticated || {};
-
-BD.Views.Unauthenticated.Login = Back
-*/
-
-var commentModel = Backbone.Model.extend({
-
-	urlRoot: "/api/postweet",
-
-	url: function (){
-		url = this.urlRoot
-	}
-});
-
-var commentView = Backbone.View.extend({
-
-	el: "#postBox",
-
-	events: {
-		"click #sendTweet": "commentSave"
-
-	},
-
-	commentSave: function(evt) {
-
-		evt.preventDefault();
-
-		var userName = $("#userName").val();
-		var tweetPost = $("#tweetPost").val();
-
-		this.model.set({username: userName, comment: tweetPost});
-		this.model.save();
+// 	events: {
+// 		"click #sendTweet": "commentSave",
+// 		//"scroll": "checkScroll"
 
 
-	}
+// 	},
 
-});
+// 	// dataGrab: function(maxyID) {
+
+// 	//   insertData(tweetData);
+// 	//   insertLightBoxData(tweetData);
+// 	// },
+
+// 	// checkScroll: function (datastuff) {
+//  //      var triggerPoint = 100; // 100px from the bottom
+//  //        if( !this.isLoading && this.el.scrollTop + this.el.clientHeight + triggerPoint > this.el.scrollHeight ) {
+//  //          this.fullTweets.page += 1; // Load next page
+//  //          debugger;
+//  //          dataGrab(grabthis);
+//  //        }
+//  //    },
+
+// 	commentSave: function(evt) {
+
+// 		evt.preventDefault();
+
+// 		var userName = $("#userName").val();
+// 		var tweetPost = $("#tweetPost").val();
+
+// 		this.model.set({username: userName, comment: tweetPost});
+// 		this.model.save();
+// 	}
+
+// });
 
 
 var tweetModel = Backbone.Model.extend({});
@@ -183,7 +115,114 @@ var fullTweets = Backbone.Collection.extend({
 			}
 		});
 		return locOrder;
-	}
+	},
+
+});
+
+// function dataGrab(){
+// 	debugger;
+// }
+
+
+
+//Lightbox
+// function insertLightBoxData(boxData) {
+// 	$(document).on('click', '.list-group-item', function() {
+// 		var x = $(this).attr("ID");
+// 		x = Number(x);
+// 		$('body').append(JST.lightBoxObject({ status: boxData[x] }));	
+//    	})
+// }
+
+// $(document).on('click', '#lightbox', function() {
+// 		$('#lightbox').remove();
+// })
+
+
+$(document).on('click', '#lightbox', function(){
+	$("#lightbox").remove();
+});
+
+var singleTweet = Backbone.View.extend({
+
+		events: {
+			"click .list-group-item": "clicked",
+		},
+
+		render: function (tweetData) {
+			//debugger;
+			c++;
+			var tweetData = this.model.toJSON();
+			this.$el.html(JST.tweetObject({counter: c, status: tweetData }));
+			return this;
+		},
+
+		clicked: function () {
+			//debugger;
+			$('body').append(JST.lightBoxObject({ status: this.model.toJSON() }));
+		}
+	  
+});
+
+var mainTweets = Backbone.View.extend({
+
+	el: "#tweetList",
+
+	events: {
+		"scroll": "checkScroll"
+	},
+
+	initialize: function () {
+		this.collection.on("reset", this.render, this);
+		//var JSONdata = this.collection.toJSON();
+		_.bindAll(this, 'checkScroll');
+    // bind to window
+    $(window).scroll(this.checkScroll);
+	},
+
+	render: function (theGreatData) {
+		
+	//	theGreatData = JSONdata.toJSON();
+		for (i = 0; i < this.collection.length; i++) {
+			//debugger;
+			$("#tweetList").append(
+				new singleTweet({ model: this.collection.models[i] }).render().$el
+			);
+
+			//$("#tweetList").append(JST.tweetObject({ counter: c, status: theGreatData[i] }));
+			if (i === this.collection.length - 1) {
+				maxyID = this.collection.models[i].id;
+				}
+		}
+
+		$('body').removeClass('stopScroll');
+		//var userList = new List('myList', options);	 
+
+		// Homework: create a new view for one tweet.  Use Tweet Object template. (Where is says append)
+		//Create new view and pass in one tweet as a model. (instead of status: would be model:)
+		//In events of new view create a 'click' function - 'OpenLightBox'.
+	},
+
+	dataGrab: function () {
+    	//debugger;
+    	console.log("Grab Data")
+
+    	$('body').addClass('stopScroll');
+    	this.collection.fetch({ data: {maxid: maxyID } });
+
+	},
+
+	checkScroll: function (datastuff, JSONdata) {
+    //var triggerPoint = 100; // 100px from the bottom
+		if (window.scrollY + 500 >= $(document).height() && !$('body').hasClass('stopScroll')) {
+				//debugger;
+				this.dataGrab();
+		//instead of this call a function that is in a view.
+			};
+    }
+
+   	
+
 });
 
 var reTweetView = Backbone.View.extend({
@@ -193,7 +232,7 @@ var reTweetView = Backbone.View.extend({
 	initialize: function() {
 		this.collection.on("reset", this.render, this);
 	},
-
+              
 	render: function() {
 
 		var tweetol = this.collection.toJSON();
@@ -206,6 +245,7 @@ var reTweetView = Backbone.View.extend({
 	}
 
 });
+
 
 var locationTweets = Backbone.View.extend({
 
@@ -226,20 +266,20 @@ var locationTweets = Backbone.View.extend({
 		for (var l = 0; l < locOrder.length; l++) {
 			$("#topLocations").append(JST.topLocations({location: locOrder[l].location, count: locOrder[l].count}))
 		}
-
 	}
+
 })
 
 
 $(document).ready(function() {
 	// dataGrab(maxyID);
 	window.myCollection = new fullTweets();
-	debugger;
 	window.myCollection.fetch({ data: {maxid: lastIDpulled } });
-	commentBlahBlah = new tweetModel();
+	//commentBlahBlah = new tweetModel();
 	var reTweet_View = new reTweetView({collection: myCollection});
 	var locationTweets_View = new locationTweets({collection: myCollection});
-	var commentTweet = new commentView({model: commentBlahBlah});
+//	var commentTweet = new commentView({model: commentBlahBlah});
+	var theFullTweetList = new mainTweets({collection: myCollection});
 });
 
 
