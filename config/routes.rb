@@ -1,11 +1,15 @@
 TwitterApi::Application.routes.draw do
   devise_for :users
 
-  root :to => "static_pages#home"
+  root :to => "static_pages#welcome"
+
+  match "static_pages/home" => "static_pages#home", as: :user_root
 
   get "static_pages/help"
 
-  get "static_pages/home"
+  get "static_pages/home" => "static_pages#home", as: :user_root
+
+  get "static_pages/welcome"
 
   get "api/retrieveTweets/:id" => "api#retrieveTweets"
 

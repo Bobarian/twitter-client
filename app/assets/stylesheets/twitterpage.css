@@ -3,7 +3,7 @@ body {
   background: url(/assets/grey_wash_wall.png) repeat;
 }
 
-h1 {
+.mainbox.h1, .welcomehead {
   color: white;
   text-shadow: 0.1em 0.1em #333;
   font-size: 20px;

@@ -2,75 +2,23 @@ var lastIDpulled = 0;
 var maxyID = 0;
 var c = 0;
 
-//Used for Sorting for List.JS
-var options = {
-  valueNames: [ 'userName', 'time', 'tweet', 'faved', 'reTweet' ]
-}
-
 //Post Data
 
-function postTweet() {
-  $.ajax({
-    type: "post",
-    url:"/api/posttweet",
-    data: {
-      username: "first last",
-      message: "hello"
-    },
-    success: function(){
-    }
-  })
-}
+// function postTweet() {
+//   $.ajax({
+//     type: "post",
+//     url:"/api/posttweet",
+//     data: {
+//       username: "first last",
+//       message: "hello"
+//     },
+//     success: function(){
+//     }
+//   })
+// }
 
 //Backbone Start
 
-// var commentModel = Backbone.Model.extend({
-
-// 	urlRoot: "/api/postweet",
-
-// 	url: function (){
-// 		url = this.urlRoot
-// 	}
-// });
-
-// var commentView = Backbone.View.extend({
-
-// 	el: "#postBox",
-
-// 	events: {
-// 		"click #sendTweet": "commentSave",
-// 		//"scroll": "checkScroll"
-
-
-// 	},
-
-// 	// dataGrab: function(maxyID) {
-
-// 	//   insertData(tweetData);
-// 	//   insertLightBoxData(tweetData);
-// 	// },
-
-// 	// checkScroll: function (datastuff) {
-//  //      var triggerPoint = 100; // 100px from the bottom
-//  //        if( !this.isLoading && this.el.scrollTop + this.el.clientHeight + triggerPoint > this.el.scrollHeight ) {
-//  //          this.fullTweets.page += 1; // Load next page
-//  //          debugger;
-//  //          dataGrab(grabthis);
-//  //        }
-//  //    },
-
-// 	commentSave: function(evt) {
-
-// 		evt.preventDefault();
-
-// 		var userName = $("#userName").val();
-// 		var tweetPost = $("#tweetPost").val();
-
-// 		this.model.set({username: userName, comment: tweetPost});
-// 		this.model.save();
-// 	}
-
-// });
 
 
 var tweetModel = Backbone.Model.extend({});
@@ -119,26 +67,6 @@ var fullTweets = Backbone.Collection.extend({
 
 });
 
-// function dataGrab(){
-// 	debugger;
-// }
-
-
-
-//Lightbox
-// function insertLightBoxData(boxData) {
-// 	$(document).on('click', '.list-group-item', function() {
-// 		var x = $(this).attr("ID");
-// 		x = Number(x);
-// 		$('body').append(JST.lightBoxObject({ status: boxData[x] }));	
-//    	})
-// }
-
-// $(document).on('click', '#lightbox', function() {
-// 		$('#lightbox').remove();
-// })
-
-
 $(document).on('click', '#lightbox', function(){
 	$("#lightbox").remove();
 });
@@ -150,7 +78,6 @@ var singleTweet = Backbone.View.extend({
 		},
 
 		render: function (tweetData) {
-			//debugger;
 			c++;
 			var tweetData = this.model.toJSON();
 			this.$el.html(JST.tweetObject({counter: c, status: tweetData }));
@@ -158,7 +85,6 @@ var singleTweet = Backbone.View.extend({
 		},
 
 		clicked: function () {
-			//debugger;
 			$('body').append(JST.lightBoxObject({ status: this.model.toJSON() }));
 		}
 	  
@@ -174,7 +100,6 @@ var mainTweets = Backbone.View.extend({
 
 	initialize: function () {
 		this.collection.on("reset", this.render, this);
-		//var JSONdata = this.collection.toJSON();
 		_.bindAll(this, 'checkScroll');
     // bind to window
     $(window).scroll(this.checkScroll);
@@ -182,29 +107,21 @@ var mainTweets = Backbone.View.extend({
 
 	render: function (theGreatData) {
 		
-	//	theGreatData = JSONdata.toJSON();
 		for (i = 0; i < this.collection.length; i++) {
-			//debugger;
 			$("#tweetList").append(
 				new singleTweet({ model: this.collection.models[i] }).render().$el
 			);
 
-			//$("#tweetList").append(JST.tweetObject({ counter: c, status: theGreatData[i] }));
 			if (i === this.collection.length - 1) {
 				maxyID = this.collection.models[i].id;
 				}
 		}
+		
+		$('body').removeClass('stopScroll'); 
 
-		$('body').removeClass('stopScroll');
-		//var userList = new List('myList', options);	 
-
-		// Homework: create a new view for one tweet.  Use Tweet Object template. (Where is says append)
-		//Create new view and pass in one tweet as a model. (instead of status: would be model:)
-		//In events of new view create a 'click' function - 'OpenLightBox'.
 	},
 
 	dataGrab: function () {
-    	//debugger;
     	console.log("Grab Data")
 
     	$('body').addClass('stopScroll');
@@ -213,17 +130,17 @@ var mainTweets = Backbone.View.extend({
 	},
 
 	checkScroll: function (datastuff, JSONdata) {
-    //var triggerPoint = 100; // 100px from the bottom
 		if (window.scrollY + 500 >= $(document).height() && !$('body').hasClass('stopScroll')) {
-				//debugger;
+			console.log("The data grabbed called on scroll")
 				this.dataGrab();
-		//instead of this call a function that is in a view.
 			};
     }
-
-   	
-
 });
+
+//Used for Sorting for List.JS
+var options = {
+  valueNames: [ 'userName', 'time', 'tweet', 'faved', 'reTweet' ]
+}
 
 var reTweetView = Backbone.View.extend({
 
@@ -253,39 +170,40 @@ var locationTweets = Backbone.View.extend({
 
 	initialize: function() {
 		this.collection.on("reset", this.render, this);
+		//this.listenTo(tweetModel, "change", this.render, this);
+		this.morethan3 = false;
 	},
 
 	render: function() {
-
+		console.log("render is logged")
 		var locSorter = this.collection.sort(function(piecesofTweet) {
 			return piecesofTweet.get("user").location
 		});
 
 		var locOrder = this.collection.locationTweetSort();
-
+		debugger;
 		for (var l = 0; l < locOrder.length; l++) {
-			$("#topLocations").append(JST.topLocations({location: locOrder[l].location, count: locOrder[l].count}))
+			if (locOrder[l].location != "" && locOrder[l].count > 1){
+				$("#topLocations").append(JST.topLocations({location: locOrder[l].location, count: locOrder[l].count}))
+				this.morethan3 = true;
+			}	
 		}
+
+		if (this.morethan3 == false) {
+				$("#locationTweetList").append("<li class='locError'>No locations with more than 3 tweets. </li>");
+				this.morethan3 = true;
+		}
+		
 	}
 
 })
 
 
 $(document).ready(function() {
-	// dataGrab(maxyID);
 	window.myCollection = new fullTweets();
+	console.log("Other grabbed data")
 	window.myCollection.fetch({ data: {maxid: lastIDpulled } });
-	//commentBlahBlah = new tweetModel();
 	var reTweet_View = new reTweetView({collection: myCollection});
 	var locationTweets_View = new locationTweets({collection: myCollection});
-//	var commentTweet = new commentView({model: commentBlahBlah});
 	var theFullTweetList = new mainTweets({collection: myCollection});
 });
-
-
-//Create a tweet container view.  El should be the same el I'm using now (where tweets go). Create another one tweet view.  Then pass the collection
-//into there.  this.render (line 215).
-
-//Interview question: Make a Todo List in Backbone.
-
-

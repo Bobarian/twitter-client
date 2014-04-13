@@ -1,0 +1,72 @@
+
+// var commentModel = Backbone.Model.extend({
+
+// 	urlRoot: "/api/postweet",
+
+// 	url: function (){
+// 		url = this.urlRoot
+// 	}
+// });
+
+// var commentView = Backbone.View.extend({
+
+// 	el: "#postBox",
+
+// 	events: {
+// 		"click #sendTweet": "commentSave",
+// 		//"scroll": "checkScroll"
+
+
+// 	},
+
+// 	// dataGrab: function(maxyID) {
+
+// 	//   insertData(tweetData);
+// 	//   insertLightBoxData(tweetData);
+// 	// },
+
+// 	// checkScroll: function (datastuff) {
+//  //      var triggerPoint = 100; // 100px from the bottom
+//  //        if( !this.isLoading && this.el.scrollTop + this.el.clientHeight + triggerPoint > this.el.scrollHeight ) {
+//  //          this.fullTweets.page += 1; // Load next page
+//  //          debugger;
+//  //          dataGrab(grabthis);
+//  //        }
+//  //    },
+
+// 	commentSave: function(evt) {
+
+// 		evt.preventDefault();
+
+// 		var userName = $("#userName").val();
+// 		var tweetPost = $("#tweetPost").val();
+
+// 		this.model.set({username: userName, comment: tweetPost});
+// 		this.model.save();
+// 	}
+
+// });
+
+
+
+// function dataGrab(){
+// 	debugger;
+// }
+
+
+
+//Lightbox
+// function insertLightBoxData(boxData) {
+// 	$(document).on('click', '.list-group-item', function() {
+// 		var x = $(this).attr("ID");
+// 		x = Number(x);
+// 		$('body').append(JST.lightBoxObject({ status: boxData[x] }));	
+//    	})
+// }
+
+// $(document).on('click', '#lightbox', function() {
+// 		$('#lightbox').remove();
+// })
+
+
+
