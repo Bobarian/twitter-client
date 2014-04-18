@@ -249,8 +249,8 @@ input:focus {
 
 .anchor{
   display: block;
-  height: 25px; <!--same height as header-->
-  margin-top: -25px; <!--same height as header-->
+  height: 25px;
+  margin-top: -25px;
   visibility: hidden;
 }
 
